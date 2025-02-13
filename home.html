@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>V-DAY</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background: radial-gradient(ellipse, #6d2424, #000000) ;
+            cursor: url("heart1.png") 16 16, auto;
+            font-family: 'Indie Flower', cursive;
+        }
+        .carousel-container {
+            position: absolute;
+            width: 60vw; /* Adjust width as needed */
+            height: 50vh; /* Adjust height as needed */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            cursor: url("heart1.png"), auto;
+            border-radius: 20px; /* Optional: Adds rounded corners */
+        }
+        .carousel {
+            width: 100%;
+            height: 100%;
+            filter: blur(80px) brightness(0.2) sepia(1) hue-rotate(-50deg) saturate(3);
+            transition: filter 2.0s ease;
+            cursor: url("heart1.png"), auto;
+        }
+        .carousel img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures images fit within container */
+            border-radius: 20px;
+            cursor: url("heart1.png"), auto;
+        }
+        .button-wrapper {
+            display: flex;
+            gap: 20px; /* Space between Yes/No buttons */
+            cursor: url("heart1.png") 16 16, auto;
+        }
+        .button-container {
+            position: absolute;
+            z-index: 2;
+            display: flex;
+            flex-direction: column; 
+            align-items: center;
+            text-align: center;
+            gap: 20px;
+            
+            padding: 20px;
+            border-radius: 80px;
+            cursor: url("heart1.png"), auto;
+        }
+        .valentine-text {
+            font-size: 32px; /* Bigger text */
+            font-weight: bold;
+            text-align: center;
+            background: radial-gradient(ellipse, rgb(237, 140, 140), #fefdfd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; /* Makes the gradient apply to text */
+            cursor: url("heart1.png") 16 16, auto;
+        }
+        #yesbutton, #nobutton {
+            padding: 15px 30px;
+            font-size: 18px;
+            border: 1px solid rgba(255, 77, 102, 0.7);
+            border-radius: 80px;
+            background: linear-gradient(135deg, #b30021, #ff3355);            
+            color: white;
+            transition: transform 0.2s;
+            cursor: url("heart1.png"), auto;
+            box-shadow: 0 4px 15px rgba(255, 51, 85, 0.5);
+            transition: transform 0.2s, box-shadow 0.2s, background 0.3s;
+            font-size: 20px;
+        }
+        #nobutton {
+            cursor: url("heart2.png"), auto;
+            background: linear-gradient(135deg, #5c000e, #8b0015);
+            color: white;
+            box-shadow: 0 4px 15px rgba(139, 0, 21, 0.5);
+            border: 1px solid rgba(139, 0, 21, 0.7);
+            transition: transform 0.2s, box-shadow 0.2s, background 0.3s;
+        }
+        #yesbutton:hover {
+            transform: scale(1.1);
+            background: linear-gradient(135deg, #ff3355, #ff6680);
+            box-shadow: 0 6px 20px rgba(255, 77, 102, 0.7);
+            font-size: 30px;
+            cursor: url("heart1.png") 16 16, auto;
+        }
+        #nobutton:hover{
+            transform: scale(1.1);
+            background: linear-gradient(135deg, #8b0015, #b30021);
+            box-shadow: 0 6px 20px rgba(139, 0, 21, 0.7);
+            font-size: 30px;
+            cursor: url("heart2.png") 16 16, auto;
+        }
+
+        .hidden {
+            display: none;
+            cursor: url("heart1.png") 16 16, auto;
+        }
+        .carousel-control-prev, .carousel-control-next {
+            filter: blur(80px);
+            transition: filter 2.0s ease;
+            cursor: url("heart1.png"), auto;
+        }
+        .carousel-active .carousel-control-prev, .carousel-active .carousel-control-next {
+            filter: none;
+            cursor: url("heart1.png"), auto;
+        }
+        .heart {
+            position: absolute;
+            color: red;
+            font-size: 24px;
+            animation: float 3s linear infinite;
+            opacity: 0.8;
+            pointer-events: none;
+            cursor: url("heart1.png") 16 16, auto;
+        }
+
+        .phrasess{
+            position: absolute;
+            color: rgb(233, 166, 166);
+            font-size: 24px;
+            animation: float 3s linear infinite;
+            opacity: 0.3;
+            pointer-events: none;
+            cursor: url("heart1.png") 16 16, auto;
+        }
+
+        @keyframes floatAround {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(30px, -40px); }
+            50% { transform: translate(-20px, 30px); }
+            75% { transform: translate(-40px, -30px); }
+            100% { transform: translate(0, 0); }
+        }
+
+        .floating-heart {
+            position: absolute;
+            color: red;
+            font-size: 30px;
+            opacity: 0.9;
+            pointer-events: none;
+            transition: transform 0.3s ease-out, opacity 0.5s ease;
+        }
+
+        .carousel-item{
+            width: 100%;
+            height: 100vh;
+            cursor: url("heart1.png") 16 16, auto;
+        }
+
+        .fade-out {
+            opacity: 0;
+            transition: opacity 1s ease-in-out; /* Smooth fading effect */
+        }
+        .valentine-message {
+            font-size: 2rem;
+            color: #fefdfd;
+            text-shadow: #000000;           
+            text-align: center;
+            margin-top: 100px;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        .heart-text {
+            position: absolute;
+            font-size: 1.2rem;
+            color: red;
+            font-weight: bold;
+            transition: transform 0.5s ease-in-out;
+        }
+        .title {
+            position: absolute;
+            font-size: 2rem;
+            font-weight: bold;
+            color: darkred;
+            top: 10%;
+            text-align: center;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background Music (Autoplay + Loop) -->
+    <audio id="bg-music" autoplay>
+        <source src="song.mp3" type="audio/mpeg">
+        Your browser does not support the audio tag.
+    </audio>
+
+    <!-- carousel -->
+    <div id="carouselExample" class="carousel slide carousel-container" data-bs-ride="carousel" data-bs-interval="10000" style="position: absolute; width: 80vw; height: 80vh; display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 20px;">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="pics/4.jpeg" class="d-block w-100" alt="First slide">
+          </div>
+          <div class="carousel-item ">
+            <img src="pics/36.jpeg" class="d-block w-100" alt="First slide">
+          </div>
+          <div class="carousel-item ">
+            <img src="pics/22.jpeg" class="d-block w-100" alt="First slide">
+          </div>
+          <div class="carousel-item ">
+            <img src="pics/12.jpeg" class="d-block w-100" alt="First slide">
+          </div>
+          <div class="carousel-item ">
+            <img src="pics/27.jpeg" class="d-block w-100" alt="First slide">
+          </div>
+          <div class="carousel-item ">
+            <img src="pics/20.jpeg" class="d-block w-100" alt="First slide">
+          </div>
+          <div class="carousel-item ">
+            <img src="pics/11.jpeg" class="d-block w-100" alt="First slide">
+          </div>
+          <div class="carousel-item ">
+            <img src="pics/28.jpeg" class="d-block w-100" alt="First slide">
+          </div>
+          <div class="carousel-item ">
+            <img src="pics/23.jpeg" class="d-block w-100" alt="First slide">
+          </div>
+          <div class="carousel-item ">
+            <img src="pics/8.jpeg" class="d-block w-100" alt="First slide">
+          </div>
+          <div class="carousel-item ">
+            <img src="pics/14.jpeg" class="d-block w-100" alt="First slide">
+          </div>
+          <div class="carousel-item ">
+            <img src="pics/32.jpeg" class="d-block w-100" alt="First slide">
+          </div>
+          <div class="carousel-item ">
+            <img src="pics/10.jpeg" class="d-block w-100" alt="First slide">
+          </div>
+          <div class="carousel-item ">
+            <img src="pics/26.jpeg" class="d-block w-100" alt="First slide">
+          </div>
+          <div class="carousel-item ">
+            <img src="pics/33.jpeg" class="d-block w-100" alt="First slide">
+          </div>
+          <div class="carousel-item ">
+            <img src="pics/16.jpeg" class="d-block w-100" alt="First slide">
+          </div>
+          <div class="carousel-item ">
+            <img src="pics/13.jpeg" class="d-block w-100" alt="First slide">
+          </div>
+          <div class="carousel-item ">
+            <img src="pics/21.jpeg" class="d-block w-100" alt="First slide">
+          </div>
+          <div class="carousel-item ">
+            <img src="pics/25.jpeg" class="d-block w-100" alt="First slide">
+          </div>
+          <div class="carousel-item ">
+            <img src="pics/30.jpeg" class="d-block w-100" alt="First slide">
+          </div>
+          <div class="carousel-item ">
+            <img src="pics/15.jpeg" class="d-block w-100" alt="First slide">
+          </div>
+          <div class="carousel-item ">
+            <img src="pics/24.jpeg" class="d-block w-100" alt="First slide">
+          </div>
+          <div class="carousel-item ">
+            <img src="pics/9.jpeg" class="d-block w-100" alt="First slide">
+          </div>
+          <div class="carousel-item ">
+            <img src="pics/29.jpeg" class="d-block w-100" alt="First slide">
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        </button>
+    </div>    
+
+    <!-- yes and no button -->
+    <div class="button-container" id="buttonContainer">
+        <p class="valentine-text top-text">will you be my valentine?</p>
+            <div class="button-wrapper">
+                <button id="yesbutton" onclick="ShowCarousel()">yes</button>
+                <button id="nobutton" onclick="ChangePhrase()">no</button>
+            </div>
+
+    </div>
+    
+    <script>
+
+        const loveYouPhrases = [
+            "Je t’aime",
+            "Te amo",
+            "Ich liebe dich",
+            "Ti amo",
+            "Eu te amo",
+            "Ik hou van jou",
+            "Я тебя люблю",
+            "我爱你",
+            "愛してる",
+            "사랑해",
+            "मैं तुमसे प्यार करता हूँ",
+            "I Love You",
+            "أحبك",
+            "Seni seviyorum",
+            "Σ’ αγαπώ",
+            "Jag älskar dig",
+            "Kocham cię",
+            "אני אוהב אותך / אוהבת אותך",
+            "ฉันรักเธอ",
+            "Anh yêu em / Em yêu anh",
+            "Mahal kita",
+            "Minä rakastan sinua",
+            "Szeretlek",
+            "Te iubesc",
+            "Miluji tě",
+            "Jeg elsker dig",
+            "Aku cinta kamu",
+            "Saya cintakan awak",
+            "আমি তোমাকে ভালোবাসি",
+            "நான் உன்னை காதலிக்கிறேன்",
+            "میں تم سے پیار کرتا ہوں / کرتی ہوں",
+            "من تو را دوست دارم"
+        ];
+
+        
+        document.addEventListener("DOMContentLoaded", function () {
+        let carousel = document.getElementById("carouselExample");
+
+        carousel.addEventListener("slid.bs.carousel", function () {
+            let activeSlide = document.querySelector(".carousel-item.active");
+            let lastSlide = document.querySelector(".carousel-item:last-child");
+
+            if (activeSlide === lastSlide) {
+                setTimeout(() => {
+                    carousel.classList.add("fade-out"); // Fade out the carousel
+
+                    setTimeout(() => {
+                        carousel.style.display = "none"; // Hide after fade-out
+                        showValentineMessage(); // Show new div after fade-out
+                    }, 1000); // Match CSS transition time
+                }, 2000); // Optional delay before fading out
+            }
+        });
+
+    function showValentineMessage() {
+        let messageDiv = document.createElement("div");
+        messageDiv.innerHTML = "happy valentine's day princess";
+        messageDiv.classList.add("valentine-message");
+        document.body.appendChild(messageDiv);
+        spawnPhrase();
+        }
+
+    });
+
+        // Attempt to autoplay the music after the page loads
+        let audio = document.getElementById("bg-music");
+        document.addEventListener("click", function() {
+            if (audio.paused) {
+                audio.play().catch(error => console.log("Autoplay blocked:", error));
+            }
+        }, { once: true }); // Ensures it runs only once
+
+        let songs = ["song2.mp3", "song3.mp3", "song.mp3"]; // List of song files
+        let currentSongIndex = 0;
+
+        audio.addEventListener("ended", function() {
+            // Move to the next song
+            if(currentSongIndex>2)
+            currentSongIndex = 0;
+
+            audio.src = songs[currentSongIndex]; // Change source to next song
+            audio.play(); // Play the next song
+            currentSongIndex = currentSongIndex+1;
+        });
+
+        function ShowCarousel() {
+            document.getElementById("buttonContainer").classList.add("hidden");
+            let carousel = document.querySelector(".carousel");
+            carousel.style.filter = "none";
+            carousel.classList.add("carousel-active");
+
+            let carouselInstance = new bootstrap.Carousel(carousel, {
+                interval: 10000,
+                ride: 'carousel'
+            });
+            removeHearts(); 
+            spawnHearts();
+        }
+
+        let heartInterval; // Store interval globally
+
+        function spawnHearts() {
+            let heartContainer = document.body;
+
+            function createHeart() {
+                let heart = document.createElement("div");
+                heart.innerHTML = "❤️";
+                heart.classList.add("heart");
+
+                // Randomize position and size
+                heart.style.left = Math.random() * window.innerWidth + "px";
+                heart.style.top = Math.random() * window.innerHeight + "px";
+                heart.style.fontSize = Math.random() * 20 + 20 + "px"; // Vary size
+                heart.style.position = "absolute";
+                heart.style.transition = "opacity 1s ease-out";
+                heartContainer.appendChild(heart);
+
+                // Remove heart after animation
+                setTimeout(() => {
+                    heart.style.opacity = "0"; // Apply fade-out effect
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 1000); // Wait for transition to complete before removing
+                }, 4000);
+            }
+
+            // Spawn hearts every 200ms for 10 seconds
+            // Start spawning hearts every 200ms
+            if (!heartInterval) {
+                heartInterval = setInterval(createHeart, 200);
+            }
+        }
+
+        function stopHearts() {
+            if (heartInterval) {
+                clearInterval(heartInterval);
+                heartInterval = null; // Reset the interval variable
+            }
+        }
+
+        let phraseCount = 0;
+        function spawnPhrase() {
+            let phrasessContainer = document.body;
+
+            function createPhrase() {
+                if (phraseCount >= loveYouPhrases.length) {
+                    phraseCount = 0; // Reset index when reaching the end
+                }
+                let phrasess = document.createElement("div");
+                phrasess.innerHTML = loveYouPhrases[phraseCount];
+                phrasess.classList.add("phrasess");
+                phraseCount++;
+                // Randomize position and size
+                phrasess.style.left = Math.random() * window.innerWidth + "px";
+                phrasess.style.top = Math.random() * window.innerHeight + "px";
+                phrasess.style.fontSize = Math.random() * 20 + 20 + "px"; // Vary size
+                phrasess.style.position = "absolute";
+                phrasess.style.transition = "opacity 1s ease-out";
+                phrasessContainer.appendChild(phrasess);
+
+                // Remove heart after animation
+                setTimeout(() => {
+                    phrasess.style.opacity = "0"; // Apply fade-out effect
+                    setTimeout(() => {
+                        phrasess.remove();
+                    }, 1000); // Wait for transition to complete before removing
+                }, 4000);
+            }
+
+            // Spawn hearts every 200ms for 10 seconds
+            // Start spawning hearts every 200ms
+            setInterval(createPhrase, 900);
+            
+        }
+
+        var count = 0;
+        function ChangePhrase() {
+            const doubtPhrases = [
+                "are you sure?", "seriously?", "for real?", "bro, ain't no way", "fuck that!", "no?", "are you certain?",
+                "you sure bout that?", "you gotta be kidding me", "really?", "you're joking", "come on bruh?",
+                "are you positive?", "wait, whaaaat?", "stfu", "naahhhh", "fuck off",
+                "are you being serious?", "is this legit?", "nooooooo", "tell me you're joking.", "this isn't a prank, right?",
+                "you're dead", "i'll kidnap you"
+            ];
+
+            var butno = document.getElementById("nobutton");
+            butno.innerHTML = doubtPhrases[count % doubtPhrases.length];
+            count++;
+        }
+
+        function spawnInitialHearts() {
+            let heartContainer = document.body;
+            let numberOfHearts = 30; // Set a fixed number of hearts
+            
+            for (let i = 0; i < numberOfHearts; i++) {
+                let heart = document.createElement("div");
+                heart.innerHTML = "❤️";
+                heart.classList.add("floating-heart");
+
+                let startX = Math.random() * window.innerWidth;
+                let startY = Math.random() * window.innerHeight;
+                let size = Math.random() * 30 + 20; // Vary size
+
+                heart.style.position = "absolute";
+                heart.style.left = `${startX}px`;
+                heart.style.top = `${startY}px`;
+                heart.style.fontSize = `${size}px`;
+                heart.style.transition = "transform 0.3s ease-out, left 0.3s, top 0.3s";
+
+                // Add slight floating movement
+                let randomFloat = Math.random() * 10 + 5;
+                setInterval(() => {
+                    heart.style.transform = `translate(${Math.sin(Date.now() / randomFloat) * 5}px, ${Math.cos(Date.now() / randomFloat) * 5}px)`;
+                }, 100);
+
+                heartContainer.appendChild(heart);
+            }
+        }
+
+        document.addEventListener("mousemove", (event) => {
+            let hearts = document.querySelectorAll(".floating-heart");
+            hearts.forEach((heart) => {
+                let rect = heart.getBoundingClientRect();
+                let heartX = rect.left + rect.width / 2;
+                let heartY = rect.top + rect.height / 2;
+
+                let deltaX = heartX - event.clientX;
+                let deltaY = heartY - event.clientY;
+                let distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+                if (distance < 150) { // Move away only if cursor is within 150px
+                    let angle = Math.atan2(deltaY, deltaX);
+                    let moveX = Math.cos(angle) * 50; // Increase movement distance
+                    let moveY = Math.sin(angle) * 50;
+                    
+                    heart.style.transform = `translate(${moveX}px, ${moveY}px)`;
+                } 
+            });
+        });
+
+        // Function to remove all hearts when "Yes" is clicked
+        function removeHearts() {
+            let hearts = document.querySelectorAll(".floating-heart");
+            hearts.forEach(heart => {
+                heart.style.opacity = "0"; // Fade out effect
+                setTimeout(() => heart.remove(), 500); // Remove from DOM
+            });
+        }
+
+        // Call function to spawn hearts on page load
+        spawnInitialHearts();
+
+        
+
+    </script>
+</body>
+</html>
